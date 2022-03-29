@@ -279,32 +279,46 @@ void render_bootmagic_status(void) {
         oled_write_P(PSTR("   "), false);
         oled_write_P(logo[0][1], false);
     }
-    oled_write_P(PSTR("   NKRO "), keymap_config.nkro);
+    //    oled_write_P(PSTR("   NKRO "), keymap_config.nkro);
 
     /* Matrix display is 12 x 12 pixels */
 
 #define MATRIX_DISPLAY_X 0
-#define MATRIX_DISPLAY_Y 70
+#define MATRIX_DISPLAY_Y 65
+
+#define MATRIX_DISPLAY_X_2 0
+#define MATRIX_DISPLAY_Y_2 85
 
     // matrix
     for (uint8_t x = 0; x < MATRIX_ROWS; x++) {
         for (uint8_t y = 0; y < MATRIX_COLS; y++) {
             bool on = (matrix_get_row(x) & (1 << y)) > 0;
-            if (x < 4){ // left
-              oled_write_pixel(MATRIX_DISPLAY_X + y + 2, MATRIX_DISPLAY_Y + x + 2, on);
+            if (x < 4){ // left //upper half
+              oled_write_pixel(MATRIX_DISPLAY_X + 3*y + 2, MATRIX_DISPLAY_Y + 3*x + 2, on);
+              oled_write_pixel(MATRIX_DISPLAY_X + 3*y + 3, MATRIX_DISPLAY_Y + 3*x + 2, on);
+              oled_write_pixel(MATRIX_DISPLAY_X + 3*y + 2, MATRIX_DISPLAY_Y + 3*x + 3, on);
+              oled_write_pixel(MATRIX_DISPLAY_X + 3*y + 3, MATRIX_DISPLAY_Y + 3*x + 3, on);
             } else {
-              //right
-              oled_write_pixel(MATRIX_DISPLAY_X + (MATRIX_COLS - y) + 2 + MATRIX_ROWS + 2, MATRIX_DISPLAY_Y + x - 4 + 2, on);
+              //right // lower half
+              oled_write_pixel(MATRIX_DISPLAY_X_2 + (2*MATRIX_COLS + 3 - 3*y) + 2, MATRIX_DISPLAY_Y_2 + 3*(x - 4) + 2, on);
+              oled_write_pixel(MATRIX_DISPLAY_X_2 + (2*MATRIX_COLS + 3 - 3*y) + 3, MATRIX_DISPLAY_Y_2 + 3*(x - 4) + 2, on);
+              oled_write_pixel(MATRIX_DISPLAY_X_2 + (2*MATRIX_COLS + 3 - 3*y) + 2, MATRIX_DISPLAY_Y_2 + 3*(x - 4) + 3, on);
+              oled_write_pixel(MATRIX_DISPLAY_X_2 + (2*MATRIX_COLS + 3 - 3*y) + 3, MATRIX_DISPLAY_Y_2 + 3*(x - 4) + 3, on);
             }
         }
     }
 
     // outline
     draw_line_h(MATRIX_DISPLAY_X, MATRIX_DISPLAY_Y, 20);
-    draw_line_h(MATRIX_DISPLAY_X, MATRIX_DISPLAY_Y + 7, 20);
-    draw_line_v(MATRIX_DISPLAY_X, MATRIX_DISPLAY_Y, 7);
-    draw_line_v(MATRIX_DISPLAY_X + 20, MATRIX_DISPLAY_Y, 8);
-    draw_line_v(MATRIX_DISPLAY_X + 10, MATRIX_DISPLAY_Y, 8);
+    draw_line_h(MATRIX_DISPLAY_X, MATRIX_DISPLAY_Y + 14, 20);
+    draw_line_v(MATRIX_DISPLAY_X, MATRIX_DISPLAY_Y, 14);
+    draw_line_v(MATRIX_DISPLAY_X + 20, MATRIX_DISPLAY_Y, 15);
+
+    draw_line_h(MATRIX_DISPLAY_X_2, MATRIX_DISPLAY_Y_2, 20);
+    draw_line_h(MATRIX_DISPLAY_X_2, MATRIX_DISPLAY_Y_2 + 14, 20);
+    draw_line_v(MATRIX_DISPLAY_X_2, MATRIX_DISPLAY_Y_2, 14);
+    draw_line_v(MATRIX_DISPLAY_X_2 + 20, MATRIX_DISPLAY_Y_2, 15);
+    //    draw_line_v(MATRIX_DISPLAY_X + 10, MATRIX_DISPLAY_Y, 8);
 
     // oled location
     //draw_line_h(MATRIX_DISPLAY_X + 14, MATRIX_DISPLAY_Y + 2, 3);
@@ -347,9 +361,9 @@ bool oled_task_user(void) {
         sprintf(wpm_str, "WPM:%03d", get_current_wpm());  // edit the string to change wwhat shows up, edit %03d to change how many digits show up
         oled_write(wpm_str, false);                       // writes wpm on top left corner of string
 
-        led_t led_state = host_keyboard_led_state();  // caps lock stuff, prints CAPS on new line if caps led is on
-        oled_set_cursor(0, 1);
-        oled_write_P(led_state.caps_lock ? PSTR("CAPS") : PSTR("       "), false);
+        ///        led_t led_state = host_keyboard_led_state();  // caps lock stuff, prints CAPS on new line if caps led is on
+        //        oled_set_cursor(0, 1);
+        //        oled_write_P(led_state.caps_lock ? PSTR("CAPS") : PSTR("       "), false);
     }
     return false;
 }

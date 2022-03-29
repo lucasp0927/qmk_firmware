@@ -19,8 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #pragma once
+//reduce firmware size
+#undef LOCKING_SUPPORT_ENABLE
+#undef LOCKING_RESYNC_ENABLE
+#define NO_ACTION_ONESHOT
+#define NO_MUSIC_MODE
+#define LAYER_STATE_8BIT
 
-// reduce firmware size
+
 #ifndef NO_DEBUG
 #define NO_DEBUG
 #endif // !NO_DEBUG
@@ -28,11 +34,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_PRINT
 #endif // !NO_PRINT
 
+/* disable action features */
+//#define NO_ACTION_LAYER
+//#define NO_ACTION_TAPPING
+//#define NO_ACTION_ONESHOT
+
 //#define USE_MATRIX_I2C
 
 /* Select hand configuration */
 
 #define MASTER_LEFT
+#define SPLIT_WPM_ENABLE
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
@@ -40,9 +52,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define TAPPING_TERM 100
 
 #ifdef RGBLIGHT_ENABLE
-    #define RGBLIGHT_EFFECT_BREATHING
-    #define RGBLIGHT_EFFECT_RAINBOW_MOOD
-    #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+//    #define RGBLIGHT_EFFECT_BREATHING
+//    #define RGBLIGHT_EFFECT_RAINBOW_MOOD
+//    #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
 //    #define RGBLIGHT_EFFECT_SNAKE
 //    #define RGBLIGHT_EFFECT_KNIGHT
 //    #define RGBLIGHT_EFFECT_CHRISTMAS
@@ -55,10 +67,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_SAT_STEP 17
     #define RGBLIGHT_VAL_STEP 17
     #define RGBLIGHT_SLEEP  // allows us to use rgblight_suspend() and rgblight_wakeup() in keymap.c
-    #define RGBLIGHT_TIMEOUT 10000  // 60 seconds
+    #define RGBLIGHT_TIMEOUT 30000  // 30 seconds
 #endif
 
 #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
-#define OLED_TIMEOUT 10000
+#define OLED_TIMEOUT 30000
 #define OLED_FADE_OUT
 #define OLED_FADE_OUT_INTERVAL 1

@@ -52,8 +52,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define TAPPING_TERM 100
 
 #ifdef RGBLIGHT_ENABLE
-//    #define RGBLIGHT_EFFECT_BREATHING
-//    #define RGBLIGHT_EFFECT_RAINBOW_MOOD
+    #define RGBLIGHT_EFFECT_BREATHING
+    #define RGBLIGHT_EFFECT_RAINBOW_MOOD
 //    #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
 //    #define RGBLIGHT_EFFECT_SNAKE
 //    #define RGBLIGHT_EFFECT_KNIGHT

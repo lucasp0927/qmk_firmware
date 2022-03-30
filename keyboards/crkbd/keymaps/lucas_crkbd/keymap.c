@@ -15,12 +15,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 #include "ocean_dream.h"
 #include "animation.c"
 char wpm_str[10];
+//char count_str[5];
+//long char_count = 0;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
@@ -31,7 +32,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  MT(MOD_LCTL|MOD_LSFT|MOD_LALT,KC_ESC),
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                              KC_LGUI,   MO(1),  MT(MOD_LCTL,KC_SPC),     KC_ENT,   MO(2), KC_RALT
+       //                              KC_LGUI,   MO(1),  MT(MOD_LCTL,KC_SPC),     KC_ENT,   MO(2), KC_RALT
+                                       KC_LGUI,   LT(1,KC_SPC),  MT(MOD_LCTL,KC_SPC),     KC_ENT,   MO(2), KC_RALT
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -174,7 +176,7 @@ static void render_anim(void) {
 ///////////////////
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master()) {
+  if (is_keyboard_left()) {
     return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
   }
   return OLED_ROTATION_270;
@@ -207,8 +209,9 @@ void oled_render_layer_state(void) {
 }
 
 
-char keylog_str[24] = {};
+//char keylog_str[24] = {};
 
+/*
 const char code_to_name[60] = {
     ' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
     'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
@@ -234,7 +237,7 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
 void oled_render_keylog(void) {
     oled_write(keylog_str, false);
 }
-
+*/
 //void render_bootmagic_status(bool status) {
 //    /* Show Ctrl-Gui Swap options */
 //    static const char PROGMEM logo[][2][3] = {
@@ -268,8 +271,7 @@ void render_bootmagic_status(void) {
         {{0x97, 0x98, 0}, {0xb7, 0xb8, 0}},
         {{0x95, 0x96, 0}, {0xb5, 0xb6, 0}},
     };
-    oled_write_P(PSTR("BTMGK"), false);
-    oled_write_P(PSTR(""), false);
+    //    oled_write_P(PSTR("BTMGK"), false);
     if (!keymap_config.swap_lctl_lgui) {
         oled_write_P(logo[1][0], false);
         oled_write_P(PSTR("   "), false);
@@ -279,8 +281,9 @@ void render_bootmagic_status(void) {
         oled_write_P(PSTR("   "), false);
         oled_write_P(logo[0][1], false);
     }
-    //    oled_write_P(PSTR("   NKRO "), keymap_config.nkro);
-
+    oled_write_P(PSTR("   "), false);
+    oled_write_P(PSTR("NKRO"), keymap_config.nkro);
+    oled_write_P(PSTR("      "), false);
     /* Matrix display is 12 x 12 pixels */
 
 #define MATRIX_DISPLAY_X 0
@@ -309,6 +312,7 @@ void render_bootmagic_status(void) {
     }
 
     // outline
+
     draw_line_h(MATRIX_DISPLAY_X, MATRIX_DISPLAY_Y, 20);
     draw_line_h(MATRIX_DISPLAY_X, MATRIX_DISPLAY_Y + 14, 20);
     draw_line_v(MATRIX_DISPLAY_X, MATRIX_DISPLAY_Y, 14);
@@ -320,6 +324,9 @@ void render_bootmagic_status(void) {
     draw_line_v(MATRIX_DISPLAY_X_2 + 20, MATRIX_DISPLAY_Y_2, 15);
     //    draw_line_v(MATRIX_DISPLAY_X + 10, MATRIX_DISPLAY_Y, 8);
 
+    //    oled_set_cursor(0, 10);                            // sets cursor to (row, column) using charactar spacing (5 rows on 128x32 screen, anything more will overflow back to the top)
+    //    sprintf(count_str, "%5ld", char_count);  // edit the string to change wwhat shows up, edit %03d to change how many digits show up
+    ///    oled_write(count_str, false);
     // oled location
     //draw_line_h(MATRIX_DISPLAY_X + 14, MATRIX_DISPLAY_Y + 2, 3);
 
@@ -350,7 +357,7 @@ void render_animation(uint8_t frame) {
 }
 
 bool oled_task_user(void) {
-    if (is_keyboard_master()) {
+    if (!is_keyboard_left()) {
         oled_render_layer_state();
         render_bootmagic_status();
     } else {
@@ -368,12 +375,15 @@ bool oled_task_user(void) {
     return false;
 }
 
+/*
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    set_keylog(keycode, record);
-  }
+    if (record->event.pressed) {
+      //set_keylog(keycode, record);
+      char_count++;
+    }
   return true;
  }
+*/
 #endif // OLED_ENABLE
 
 

@@ -432,10 +432,10 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 /* Runs after each encoder tick, check if activity occurred */
-void post_encoder_update_user(uint8_t index, bool clockwise) {
-  #ifdef RGBLIGHT_TIMEOUT
-  refresh_rgb();
-  #endif
+//void post_encoder_update_user(uint8_t index, bool clockwise) {
+//  #ifdef RGBLIGHT_TIMEOUT
+//  refresh_rgb();
+//  #endif
 
   /* rest of the function code here */
-}
+//}

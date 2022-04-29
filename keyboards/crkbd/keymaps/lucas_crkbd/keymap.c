@@ -17,49 +17,58 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include QMK_KEYBOARD_H
 #include <stdio.h>
-#include "ocean_dream.h"
+//#include "ocean_dream.h"
 #include "animation.c"
-char wpm_str[10];
-//char count_str[5];
-//long char_count = 0;
+char wpm_str[8];
+
+char count_str[5];
+long char_count = 0;
+long old_char_count = 0;
+#ifdef RGBLIGHT_ENABLE
+static uint16_t key_timer; // timer to track the last keyboard activity
+//char key_timer_str[8];
+static void refresh_rgb(void); // refreshes the activity timer and RGB, invoke whenever activity happens
+static void check_rgb_timeout(void); // checks if enough time has passed for RGB to timeout
+bool is_rgb_timeout = false; // store if RGB has timed out or not in a boolean
+#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
+       KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_RCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
+  //    KC_RCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
+       RGUI(KC_SPC),   KC_A, LALT_T(KC_S), LCTL_T(KC_D), LGUI_T(KC_F),    KC_G,          KC_H,   LGUI_T(KC_J), LCTL_T(KC_K), LALT_T(KC_L), KC_SCLN, KC_QUOT, //home row mod
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  MT(MOD_LCTL|MOD_LSFT|MOD_LALT,KC_ESC),
+       LGUI(KC_LSFT),    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  MT(MOD_RCTL|MOD_LSFT|MOD_LALT,KC_TAB),
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
        //                              KC_LGUI,   MO(1),  MT(MOD_LCTL,KC_SPC),     KC_ENT,   MO(2), KC_RALT
-       //                                KC_LGUI,   LT(1,KC_SPC),  MT(MOD_LCTL,KC_SPC),     KC_ENT,   MO(2), KC_RALT
-                                        KC_LGUI,   MT(MOD_LCTL,KC_SPC), LT(1,KC_SPC),       MO(2), KC_ENT, KC_RALT
+                                      KC_LSFT,    MO(1),  KC_SPC,     KC_ENT,   MO(2), KC_BSPC
                                       //`--------------------------'  `--------------------------'
 
   ),
 
   [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_DEL,
+       KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_DEL,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_RCTL, XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME,  KC_END,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX,  KC_F12,
+       RGUI(KC_SPC), XXXXXXX, XXXXXXX, XXXXXXX, KC_HOME,  KC_END,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX,  KC_F12,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
+       LGUI(KC_LSFT),   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  KC_SPC,_______,       MO(3),  KC_ENT, KC_RALT
+                                          KC_LSFT, _______,  KC_SPC,     KC_ENT,   MO(3), KC_DEL
                                       //`--------------------------'  `--------------------------'
   ),
 
   [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
+       KC_ESC, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_RCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MINS,  KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS,  KC_GRV,
+       RGUI(KC_SPC), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MINS,  KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS,  KC_GRV,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, KC_TILD,
+       LGUI(KC_LSFT), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, KC_TILD,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  KC_SPC,   MO(3),    _______,  KC_ENT, KC_RALT
+                                          KC_LSFT,   MO(3),  KC_SPC,     KC_ENT, _______, KC_BSPC
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -71,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       NK_TOGG, RGB_HUD, RGB_SAD, RGB_VAD,RGB_RMOD, LCG_NRM,            KC_KB_VOLUME_DOWN,    KC_1,    KC_2,    KC_3,    KC_0, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  KC_SPC, _______,    _______,  KC_ENT, KC_RALT
+                                          KC_LSFT, _______,  KC_SPC,     KC_ENT, _______, KC_BSPC
                                       //`--------------------------'  `--------------------------'
   )
 };
@@ -239,7 +248,7 @@ void oled_render_keylog(void) {
     oled_write(keylog_str, false);
 }
 */
-//void render_bootmagic_status(bool status) {
+//voidder_bootmagic_status(bool status) {
 //    /* Show Ctrl-Gui Swap options */
 //    static const char PROGMEM logo[][2][3] = {
 //        {{0x97, 0x98, 0}, {0xb7, 0xb8, 0}},
@@ -277,15 +286,25 @@ void render_bootmagic_status(void) {
         oled_write_P(logo[1][0], false);
         oled_write_P(PSTR("   "), false);
         oled_write_P(logo[1][1], false);
+        //    oled_write_P(PSTR("ACG    "), false);
     } else {
         oled_write_P(logo[0][0], false);
         oled_write_P(PSTR("   "), false);
         oled_write_P(logo[0][1], false);
+        //    oled_write_P(PSTR("AGC    "), false);
     }
     oled_write_P(PSTR("   "), false);
     oled_write_P(PSTR("NKRO"), keymap_config.nkro);
     oled_write_P(PSTR("      "), false);
-    /* Matrix display is 12 x 12 pixels */
+
+    if (char_count != old_char_count){
+      oled_set_cursor(0,14);
+      oled_write_P(PSTR("        "),false);
+      oled_set_cursor(0,14);
+      sprintf(count_str, "%ld",char_count);
+      oled_write(count_str, false);
+      old_char_count = char_count;
+    }
 
 #define MATRIX_DISPLAY_X 0
 #define MATRIX_DISPLAY_Y 65
@@ -336,6 +355,19 @@ void render_bootmagic_status(void) {
 //    char wpm[6];
 //    itoa(get_current_wpm(), wpm, 10);
 //    oled_write_ln(wpm, false);
+    //debug message
+    //oled_set_cursor(0,13);
+    //oled_write_P(PSTR("Debug"),false);
+    //oled_set_cursor(0,14);
+    //oled_write_P(PSTR("        "),false);
+    //
+    //oled_set_cursor(0,14);
+    //sprintf(count_str, "%ld",char_count);
+    //oled_write(count_str, false);
+
+    //sprintf(key_timer_str, "%d",timer_elapsed(key_timer));
+    //oled_write(key_timer_str, false);
+
 }
 
 void oled_render_logo(void) {
@@ -368,6 +400,15 @@ bool oled_task_user(void) {
         oled_set_cursor(0, 0);                            // sets cursor to (row, column) using charactar spacing (5 rows on 128x32 screen, anything more will overflow back to the top)
         sprintf(wpm_str, "WPM:%03d", get_current_wpm());  // edit the string to change wwhat shows up, edit %03d to change how many digits show up
         oled_write(wpm_str, false);                       // writes wpm on top left corner of string
+        //oled_set_cursor(0,1);
+        //oled_write_P(PSTR("Debug"),false);
+        //oled_set_cursor(0,2);
+        //oled_write_P(PSTR("        "),false);
+        //oled_set_cursor(0,2);
+        //sprintf(count_str, "%ld",char_count);
+        //oled_write(count_str, false);
+        //sprintf(key_timer_str, "%d",timer_elapsed(key_timer));
+        //oled_write(key_timer_str, false);
 
         ///        led_t led_state = host_keyboard_led_state();  // caps lock stuff, prints CAPS on new line if caps led is on
         //        oled_set_cursor(0, 1);
@@ -390,10 +431,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 //RGB STUFF
 #ifdef RGBLIGHT_ENABLE
-static uint16_t key_timer; // timer to track the last keyboard activity
-static void refresh_rgb(void); // refreshes the activity timer and RGB, invoke whenever activity happens
-static void check_rgb_timeout(void); // checks if enough time has passed for RGB to timeout
-bool is_rgb_timeout = false; // store if RGB has timed out or not in a boolean
+
 
 void refresh_rgb() {
   key_timer = timer_read(); // store time of last refresh
@@ -401,13 +439,18 @@ void refresh_rgb() {
     print("Activity detected, removing timeout\n");
     is_rgb_timeout = false;
     rgblight_wakeup();
+    oled_on();
   }
 }
 
 void check_rgb_timeout() {
   if (!is_rgb_timeout && timer_elapsed(key_timer) > RGBLIGHT_TIMEOUT) {
     rgblight_suspend();
+    oled_off();
     is_rgb_timeout = true;
+  }
+  if (timer_elapsed(key_timer)>RGBLIGHT_TIMEOUT){
+    key_timer = timer_read();
   }
 }
 #endif
@@ -417,7 +460,9 @@ void check_rgb_timeout() {
 /* Runs at the end of each scan loop, check if RGB timeout has occured */
 void housekeeping_task_user(void) {
   #ifdef RGBLIGHT_TIMEOUT
-  check_rgb_timeout();
+  if (is_keyboard_master()){
+    check_rgb_timeout();
+  }
   #endif
 
   /* rest of the function code here */
@@ -426,8 +471,27 @@ void housekeeping_task_user(void) {
 /* Runs after each key press, check if activity occurred */
 void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
   #ifdef RGBLIGHT_TIMEOUT
-  if (record->event.pressed) refresh_rgb();
+  if (is_keyboard_master()){
+    if (record->event.pressed) refresh_rgb();
+    char_count++;
+  }
   #endif
 
   /* rest of the function code here */
 }
+
+void keyboard_post_init_user() {
+  #ifdef RGBLIGHT_TIMEOUT
+  is_rgb_timeout = false;
+  refresh_rgb();
+  #endif
+
+}
+/* Runs after each encoder tick, check if activity occurred */
+//void post_encoder_update_user(uint8_t index, bool clockwise) {
+//  #ifdef RGBLIGHT_TIMEOUT
+//  refresh_rgb();
+//  #endif
+
+  /* rest of the function code here */
+//}

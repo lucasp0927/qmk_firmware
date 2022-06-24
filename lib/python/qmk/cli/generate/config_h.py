@@ -202,20 +202,5 @@ def generate_config_h(cli):
         generate_split_config(kb_info_json, config_h_lines)
 
     # Show the results
-<<<<<<< HEAD
     dump_lines(cli.args.output, config_h_lines, cli.args.quiet)
-=======
-    config_h = '\n'.join(config_h_lines)
 
-    if cli.args.output:
-        cli.args.output.parent.mkdir(parents=True, exist_ok=True)
-        if cli.args.output.exists():
-            cli.args.output.replace(cli.args.output.parent / (cli.args.output.name + '.bak'))
-        cli.args.output.write_text(config_h, encoding='utf-8')
-
-        if not cli.args.quiet:
-            cli.log.info('Wrote info_config.h to %s.', cli.args.output)
-
-    else:
-        print(config_h)
->>>>>>> ace0603f4f (Change data driven "str" type to represent a quoted string literal (#16516))

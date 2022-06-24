@@ -233,9 +233,9 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         rgb_matrix_set_color(LED_FN, RGB_RED); //FN key
 
         //NEW RGB LIGHTING TO RING KEYBOARD ON FN LAYER ACTIVATION:
-        for (uint8_t j = 0; j < ARRAYSIZE(LED_LIST_FUNCROW); j++) {
-            rgb_matrix_set_color(LED_LIST_FUNCROW[j], RGB_RED);
-        }
+        //for (uint8_t j = 0; j < ARRAYSIZE(LED_LIST_FUNCROW); j++) {
+        //    rgb_matrix_set_color(LED_LIST_FUNCROW[j], RGB_RED);
+        //}
         rgb_matrix_set_color(LED_LCTL, RGB_RED);
         rgb_matrix_set_color(LED_LALT, RGB_RED);
         rgb_matrix_set_color(LED_SPC, RGB_RED);
@@ -244,25 +244,25 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         rgb_matrix_set_color(LED_FN, RGB_OFFBLUE);
         rgb_matrix_set_color(LED_RCTL, RGB_RED);
         rgb_matrix_set_color(LED_BSLS, RGB_RED);
-        rgb_matrix_set_color(LED_L1, RGB_RED);
-        rgb_matrix_set_color(LED_L2, RGB_RED);
-        rgb_matrix_set_color(LED_L3, RGB_RED);
-        rgb_matrix_set_color(LED_L4, RGB_RED);
-        rgb_matrix_set_color(LED_L5, RGB_RED);
-        rgb_matrix_set_color(LED_L6, RGB_RED);
-        rgb_matrix_set_color(LED_L7, RGB_RED);
-        rgb_matrix_set_color(LED_L8, RGB_RED);
+        //rgb_matrix_set_color(LED_L1, RGB_RED);
+        //rgb_matrix_set_color(LED_L2, RGB_RED);
+        //rgb_matrix_set_color(LED_L3, RGB_RED);
+        //rgb_matrix_set_color(LED_L4, RGB_RED);
+        //rgb_matrix_set_color(LED_L5, RGB_RED);
+        //rgb_matrix_set_color(LED_L6, RGB_RED);
+        //rgb_matrix_set_color(LED_L7, RGB_RED);
+        //rgb_matrix_set_color(LED_L8, RGB_RED);
         rgb_matrix_set_color(LED_DOWN, RGB_RED);
         rgb_matrix_set_color(LED_LEFT, RGB_RED);
         rgb_matrix_set_color(LED_RIGHT, RGB_RED);
-        rgb_matrix_set_color(LED_R1, RGB_RED);
-        rgb_matrix_set_color(LED_R2, RGB_RED);
-        rgb_matrix_set_color(LED_R3, RGB_RED);
-        rgb_matrix_set_color(LED_R4, RGB_RED);
-        rgb_matrix_set_color(LED_R5, RGB_RED);
-        rgb_matrix_set_color(LED_R6, RGB_RED);
-        rgb_matrix_set_color(LED_R7, RGB_RED);
-        rgb_matrix_set_color(LED_R8, RGB_RED);
+        //rgb_matrix_set_color(LED_R1, RGB_RED);
+        //rgb_matrix_set_color(LED_R2, RGB_RED);
+        //rgb_matrix_set_color(LED_R3, RGB_RED);
+        //rgb_matrix_set_color(LED_R4, RGB_RED);
+        //rgb_matrix_set_color(LED_R5, RGB_RED);
+        //rgb_matrix_set_color(LED_R6, RGB_RED);
+        //rgb_matrix_set_color(LED_R7, RGB_RED);
+        //rgb_matrix_set_color(LED_R8, RGB_RED);
         //rgb_matrix_set_color(LED_MINS, RGB_OFFBLUE);
         //rgb_matrix_set_color(LED_EQL, RGB_OFFBLUE);
 

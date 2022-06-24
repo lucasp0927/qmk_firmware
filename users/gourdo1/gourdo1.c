@@ -1,6 +1,6 @@
 /* Copyright 2021 Jonavin Eng @Jonavin
    Copyright 2022 gourdo1 <jcblake@outlook.com>
-   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -173,7 +173,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
             // when keycode is released
         }
         break;
-		
+
 /*
     case YAHOO:
         if (record -> event.pressed) SEND_STRING("yahoo.com");
@@ -198,21 +198,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         break;
 */
 
-    // Windows key lock		
+    // Windows key lock
     case KC_WINLCK:
         if (record -> event.pressed) {
             keymap_config.no_gui = !keymap_config.no_gui; //toggle status
         } else unregister_code16(keycode);
         break;
 
-    // Double Zero    
+    // Double Zero
     case KC_00:
         if (record -> event.pressed) {
             // when keycode KC_00 is pressed
             SEND_STRING("00");
         } else unregister_code16(keycode);
         break;
-
+/*
     // Treat Control+Space as if regular Space
     case KC_SPC: {
         // Initialize a boolean variable that keeps track of the space key status: registered or not?
@@ -241,7 +241,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         }
         }
         break;
-
+*/
+/*
     // Treat Shift+Space as if regular Space
     case KC_SHIFTSPC: {
         // Initialize a boolean variable that keeps track of the space key status: registered or not?
@@ -270,7 +271,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         }
         }
         break;
-
+*/
+/*
     // Add INS as SHIFT-modified BackSpace key
     case KC_BSPC: {
         // Initialize a boolean variable that keeps track of the delete key status: registered or not?
@@ -299,7 +301,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         }
         }
         break;
-
+*/
     /* Add INS as SHIFT-modified DEL key
     case KC_DEL: {
         // Initialize a boolean variable that keeps track of the delete key status: registered or not?
@@ -349,7 +351,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         } else unregister_code16(keycode);
         break;
         #endif // RGB_MATRIX_ENABLE
-
+/*
         #ifdef EMOTICON_ENABLE
     case EMO_SHRUG:
         if (record -> event.pressed) SEND_STRING("`\\_(\"/)_/`");
@@ -383,7 +385,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         else unregister_code16(keycode);
         break;
         #endif // ALTTAB_SCROLL_ENABLE
-
+*/
     default:
         if (record -> event.pressed) {
             #ifdef RGB_MATRIX_ENABLE

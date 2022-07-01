@@ -404,7 +404,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t * record) {
     switch (keycode) {
     case KC_SFTUP:
         return 300;
-    case KC_RAISESPC:
+    //case KC_RAISESPC:
     case KC_LOWERSPC:
         return 450;
     default:

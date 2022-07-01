@@ -24,8 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 enum custom_user_layers {
     _BASE,
     _FN1,
-    _NUMPADMOUSE,
-    _MOUSEKEY,
+    _NUMPADMOUSE
+   // _MOUSEKEY,
 };
 
 #define KC_CAD LALT(LCTL(KC_DEL))
@@ -36,7 +36,7 @@ enum custom_user_layers {
 #define CT_HOME RCTL(KC_HOME)
 #define CT_END RCTL(KC_END)
 #define KC_SFTUP RSFT_T(KC_UP) // Shift when held, Up arrow when tapped
-#define KC_RAISESPC LT(_MOUSEKEY, KC_SPC) // _MOUSEKEY layer mod when held, space when tapped
+//#define KC_RAISESPC LT(_MOUSEKEY, KC_SPC) // _MOUSEKEY layer mod when held, space when tapped
 #define KC_LOWERSPC LT(_NUMPADMOUSE, KC_SPC) // _NUMPAD-MOUSE layer mod when held, space when tapped
 #define KC_SHIFTSPC LSFT(KC_SPC)
 #define SWAP_L SGUI(KC_LEFT) // Swap application to left display
@@ -117,8 +117,8 @@ bool get_rgb_nightmode(void);
 
 // IDLE TIMEOUTS
 #ifdef IDLE_TIMEOUT_ENABLE
-#define TIMEOUT_THRESHOLD_DEFAULT 15 // default timeout minutes
-#define TIMEOUT_THRESHOLD_MAX 140 // upper limits (2 hours and 10 minutes -- no rgb indicators above this value)
+#define TIMEOUT_THRESHOLD_DEFAULT 1 // default timeout minutes
+#define TIMEOUT_THRESHOLD_MAX 10 // upper limits (2 hours and 10 minutes -- no rgb indicators above this value)
 
 //prototype  functions
 uint16_t get_timeout_threshold(void);

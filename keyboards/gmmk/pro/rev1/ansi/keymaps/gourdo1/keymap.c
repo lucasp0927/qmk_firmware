@@ -104,14 +104,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,                            _______,                            _______, _______, KC_BTN3, KC_MS_L, KC_MS_D, KC_MS_R
     ),
 
-    [_MOUSEKEY] = LAYOUT(
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          KC_WH_U,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          KC_WH_D,
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          KC_BTN1, KC_MS_U, KC_BTN2,
-        _______, _______, _______,                            _______,                            _______, _______, KC_BTN3, KC_MS_L, KC_MS_D, KC_MS_R
-    ),
+    //[_MOUSEKEY] = LAYOUT(
+    //    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+    //    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+    //    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          KC_WH_U,
+    //    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          KC_WH_D,
+    //    _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          KC_BTN1, KC_MS_U, KC_BTN2,
+    //    _______, _______, _______,                            _______,                            _______, _______, KC_BTN3, KC_MS_L, KC_MS_D, KC_MS_R
+    //),
 
     #ifdef COLEMAK_LAYER_ENABLE
     [_COLEMAK] = LAYOUT(
@@ -299,18 +299,18 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         break;
 
         // MOUSEKEYS mode RGB
-    case _MOUSEKEY:
-        rgb_matrix_set_color(LED_UP, RGB_CHARTREUSE);
-        rgb_matrix_set_color(LED_DOWN, RGB_CHARTREUSE);
-        rgb_matrix_set_color(LED_LEFT, RGB_CHARTREUSE);
-        rgb_matrix_set_color(LED_RIGHT, RGB_CHARTREUSE);
-        rgb_matrix_set_color(LED_RCTL, RGB_CYAN);
-        rgb_matrix_set_color(LED_RSFT, RGB_CYAN);
-        rgb_matrix_set_color(LED_END, RGB_CYAN);
-        rgb_matrix_set_color(LED_PGUP, RGB_OFFBLUE);
-        rgb_matrix_set_color(LED_PGDN, RGB_OFFBLUE);
-
-        break;
+    //case _MOUSEKEY:
+    //    rgb_matrix_set_color(LED_UP, RGB_CHARTREUSE);
+    //    rgb_matrix_set_color(LED_DOWN, RGB_CHARTREUSE);
+    //    rgb_matrix_set_color(LED_LEFT, RGB_CHARTREUSE);
+    //    rgb_matrix_set_color(LED_RIGHT, RGB_CHARTREUSE);
+    //    rgb_matrix_set_color(LED_RCTL, RGB_CYAN);
+    //    rgb_matrix_set_color(LED_RSFT, RGB_CYAN);
+    //    rgb_matrix_set_color(LED_END, RGB_CYAN);
+    //    rgb_matrix_set_color(LED_PGUP, RGB_OFFBLUE);
+    //    rgb_matrix_set_color(LED_PGDN, RGB_OFFBLUE);
+//
+    //    break;
 
     // Colemak layer RGB
     #ifdef COLEMAK_LAYER_ENABLE
@@ -330,7 +330,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 void keyboard_post_init_keymap(void) {
     // keyboard_post_init_user() moved to userspace
     #ifdef RGB_MATRIX_ENABLE
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_CYCLE_UP_DOWN);
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_GRADIENT_UP_DOWN);
     //rgb_matrix_sethsv_noeeprom(20, 255, 127); // Default startup color (Hue:amber Saturation:full Value(brightness):mid)
     activate_rgb_nightmode(false); // Set to true if you want to startup in nightmode, otherwise use Fn + Z to toggle
     #endif

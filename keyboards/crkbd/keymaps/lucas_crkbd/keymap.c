@@ -76,9 +76,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         RESET, RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_G, LCG_SWP,                   KC_KB_MUTE,    KC_7,    KC_8,    KC_9, XXXXXXX, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_MOD, KC_PSCR,              KC_KB_VOLUME_UP,    KC_4,    KC_5,    KC_6,  KC_DOT, XXXXXXX,
+      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_MOD, KC_PSCR,              KC_KB_VOLUME_UP,    KC_4,    KC_5,    KC_6,  KC_DOT, RGB_SPI,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      NK_TOGG, RGB_HUD, RGB_SAD, RGB_VAD,RGB_RMOD, LCG_NRM,            KC_KB_VOLUME_DOWN,    KC_1,    KC_2,    KC_3,    KC_0, XXXXXXX,
+      NK_TOGG, RGB_HUD, RGB_SAD, RGB_VAD,RGB_RMOD, LCG_NRM,            KC_KB_VOLUME_DOWN,    KC_1,    KC_2,    KC_3,    KC_0, RGB_SPD,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LSFT, _______,  KC_SPC,     KC_ENT, _______, KC_MEH
                                       //`--------------------------'  `--------------------------'

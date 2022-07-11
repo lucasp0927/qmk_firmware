@@ -3,3 +3,4 @@ SRC += muse.c
 RGBLIGHT_ENABLE = no
 AUDIO_ENABLE = yes
 MAGIC_ENABLE = yes
+CAPS_WORD_ENABLE = yes

@@ -1,4 +1,4 @@
-SRC += caps_word.c
+#SRC += caps_word.c
 
 LTO_ENABLE = yes               # link time optimization -- achieves a smaller compiled size
 CONSOLE_ENABLE = no
@@ -16,3 +16,4 @@ ENCODER_DEFAULTACTIONS_ENABLE = no
 
 COLEMAK_LAYER_ENABLE = no     # Enable Colemak layer / set to no to disable
 INVERT_NUMLOCK_INDICATOR = yes
+CAPS_WORD_ENABLE = yes

@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        RESET, RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_G, LCG_SWP,                   KC_KB_MUTE,    KC_7,    KC_8,    KC_9, XXXXXXX, KC_BSPC,
+      QK_BOOT, RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_SW, LCG_SWP,                   KC_KB_MUTE,    KC_7,    KC_8,    KC_9, XXXXXXX, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_MOD, KC_PSCR,              KC_KB_VOLUME_UP,    KC_4,    KC_5,    KC_6,  KC_DOT, RGB_SPI,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -294,8 +294,8 @@ void render_bootmagic_status(void) {
         //    oled_write_P(PSTR("AGC    "), false);
     }
     oled_write_P(PSTR("   "), false);
-    oled_write_P(PSTR("NKRO"), keymap_config.nkro);
-    oled_write_P(PSTR("      "), false);
+    //oled_write_P(PSTR("NKRO"), keymap_config.nkro);
+    //oled_write_P(PSTR("      "), false);
 
     if (char_count != old_char_count){
       oled_set_cursor(0,14);

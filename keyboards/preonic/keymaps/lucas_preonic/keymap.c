@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJUST] = LAYOUT_preonic_grid(
   GAMING,  QWERTY,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-  RESET, RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_G, LCG_SWP,                   KC_KB_MUTE,    KC_7,    KC_8,    KC_9, _______, KC_BSPC,
+  QK_BOOT, RGB_M_P, RGB_M_B, RGB_M_R, RGB_M_G, LCG_SWP,                   KC_KB_MUTE,    KC_7,    KC_8,    KC_9, _______, KC_BSPC,
   _______, _______, MUV_IN, RGB_VAI, RGB_MOD, KC_PSCR,              KC_KB_VOLUME_UP,    KC_4,    KC_5,    KC_6,  KC_DOT, _______,
   EEP_RST, _______, MUV_DE, RGB_VAD,RGB_RMOD, LCG_NRM,            KC_KB_VOLUME_DOWN,    KC_1,    KC_2,    KC_3,    KC_0, _______,
   KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______,  KC_SPC,  KC_SPC,  _______,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
